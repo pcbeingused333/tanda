@@ -1,0 +1,31 @@
+# A runnable demo with a fake agent (no API keys, no tokens).
+#   tanda run      # in one terminal
+#   tanda ui       # in another, then open http://127.0.0.1:8787
+[tanda]
+name = "hello"
+initial_state = "TODO"
+poll_seconds = 1
+max_hours = 0.25
+
+[agents.fake]
+cmd = ["python3", "fake_agent.py", "{prompt}"]
+
+[roles.scout]           # runs once per tanda and fills the queue
+agent = "fake"
+mode = "once"
+prompt = "prompts/scout.md"
+
+[roles.builder]         # claims TODO/FIX items one at a time
+agent = "fake"
+count = 2
+claims = ["TODO", "FIX"]
+working = "BUILDING"
+verdicts = ["BUILT", "DROPPED", "HOLD"]
+prompt = "prompts/builder.md"
+
+[roles.reviewer]
+agent = "fake"
+claims = ["BUILT"]
+working = "REVIEW"
+verdicts = ["DONE", "FIX", "DROPPED", "HOLD"]
+prompt = "prompts/reviewer.md"

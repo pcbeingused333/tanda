@@ -1,0 +1,6 @@
+__pycache__/
+*.egg-info/
+.tanda/
+build/
+dist/
+.venv/

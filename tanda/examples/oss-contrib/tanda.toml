@@ -1,0 +1,52 @@
+# Contributing to open source without burning maintainers out.
+# Flow: scout -> TRIAGE (you, in the UI) -> TODO -> builder -> BUILT -> reviewer -> READY -> you publish -> DONE
+# Agents never write to GitHub here: they commit locally and draft the PR text. You read, decide and publish.
+[tanda]
+name = "oss-contrib"
+initial_state = "TRIAGE"     # everything the scout finds waits for a human (or a triage role) first
+wait_states = ["TRIAGE"]     # keep the tanda alive while items still wait for triage
+extra_states = ["READY"]
+max_hours = 6
+
+[limits]
+group_cap = 5                # at most 5 active items per repo: volume is what annoys maintainers
+blocked_groups = []          # repos/orgs to skip entirely, e.g. ["some-org/"]
+
+# Pick any agent CLI per role. Presets: claude, opencode, codex. Examples:
+#   agent = "claude",   model = "sonnet"
+#   agent = "opencode", model = "xai/grok-4"             (Grok through opencode)
+#   agent = "opencode", model = "deepseek/deepseek-chat"  (DeepSeek through opencode)
+# Or your own: [agents.mine] cmd = ["my-cli", "--model", "{model}", "{prompt}"]
+
+[roles.scout]
+agent = "claude"
+model = "sonnet"
+mode = "once"
+prompt = "prompts/scout.md"
+timeout_minutes = 90
+
+[roles.builder]
+agent = "claude"
+model = "sonnet"
+count = 3
+claims = ["TODO", "FIX"]
+working = "BUILDING"
+verdicts = ["BUILT", "DROPPED", "HOLD"]
+prompt = "prompts/builder.md"
+
+[roles.reviewer]             # use your strongest model here: it is the quality gate
+agent = "claude"
+model = "opus"
+claims = ["BUILT"]
+working = "REVIEW"
+verdicts = ["READY", "FIX", "DROPPED", "HOLD"]
+prompt = "prompts/reviewer.md"
+
+# Optional: let an agent triage instead of you. Remove "TRIAGE" from wait_states if you do.
+# [roles.triage]
+# agent = "claude"
+# model = "opus"
+# claims = ["TRIAGE"]
+# working = "TRIAGING"
+# verdicts = ["TODO", "DROPPED", "HOLD"]
+# prompt = "prompts/triage.md"

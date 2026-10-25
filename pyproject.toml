@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tanda"
+version = "0.1.0"
+description = "Run a fleet of coding agents (Claude Code, opencode, Codex, ...) around one shared queue, with a review gate and a local dashboard."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+dependencies = []
+
+[project.scripts]
+tanda = "tanda.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["tanda*"]
+
+[tool.setuptools.package-data]
+tanda = ["ui.html", "examples/*/*", "examples/*/prompts/*"]
