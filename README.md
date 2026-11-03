@@ -68,6 +68,8 @@ Agents run non-interactively, so they need permission to run commands without as
 - **Respect AI policies.** The scout skips repos whose CONTRIBUTING/AGENTS file rejects AI-assisted contributions.
 - **Agents never write to GitHub.** They commit locally and draft the PR text with a neutral disclosure; you read it, decide and publish.
 
+The in-house system these lessons come from, with its numbers, is described in [docs/case-study-oss.md](docs/case-study-oss.md).
+
 ## Status
 
 v0.1: small and young. Known gaps: `tanda stop` does not interrupt a running `once` role; one machine only; the UI has no auth. Ideas and PRs are welcome.
