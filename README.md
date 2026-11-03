@@ -1,5 +1,7 @@
 # tanda
 
+> **Public prototype.** tanda is the general, cleaned-up version of the multi-agent pipeline I run every day for open-source work (described in [docs/case-study-oss.md](docs/case-study-oss.md)). The in-house system moves faster; this repo is synced with its generic parts every two weeks. Last sync: 2026-11-03.
+
 Run a small fleet of coding agents around **one shared queue**, with a **review gate** and a **local dashboard**.
 
 A *tanda* (Spanish for a shift or a batch) is one run: a scout fills the queue, builders take items one at a time, a reviewer approves or sends work back, and the run stops by itself when the queue is drained. Waiting is done by tanda, not by the agents: an agent only starts when there is an item for it and exits when it has given its verdict, so idle roles cost no tokens.
