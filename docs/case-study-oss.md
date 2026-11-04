@@ -54,9 +54,9 @@ These are policy decisions, each made after looking at what earlier runs produce
 
 - **Only work maintainers want.** New rows come from issues the team opened, labelled or
   confirmed, or from regressions users hit in current `main`; speculative clean-ups are dropped.
-- **Companies with a live product first.** New work goes to repositories owned by companies
-  with a paid team, and within those to the ones hiring for this profile. Follow-ups on PRs
-  already open continue anywhere until they are merged or closed.
+- **Maintained projects first.** New work goes to repositories with an active team behind them
+  and to those that already merge this kind of fix. Follow-ups on PRs already open continue
+  anywhere until they are merged or closed.
 - **Volume caps.** A ceiling of open PRs per repository, lower where a maintainer asked for it,
   and some organisations frozen entirely. Maintainers notice volume before quality.
 - **AI policies are respected.** Repositories whose contribution guide rejects AI-assisted
