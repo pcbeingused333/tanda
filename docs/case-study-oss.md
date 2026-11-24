@@ -5,9 +5,9 @@ fixes to open-source AI tooling. This page describes that in-house system: how i
 the rules it runs under, and what the numbers say. It describes the design only; the scripts
 themselves stay private.
 
-**Result so far:** 736 pull requests merged by maintainers across 169 repositories since
-August 2026, 167 of them in repositories with over 10k stars. The full list is in the
-[Merge Log](https://portfolio-alexgonzalez33.vercel.app).
+**Result so far (24 November 2026):** 1,737 pull requests merged by maintainers across 405
+repositories since August 2026, 310 of them in repositories with over 10k stars. The full list
+is in the [Merge Log](https://portfolio-alexgonzalez33.vercel.app).
 
 ## Roles
 
@@ -36,8 +36,12 @@ flowchart LR
 | --- | --- | --- |
 | Scout (×2) | mid | Search for real bugs; add rows to the queue. No code, no writes to GitHub. |
 | Follow-up scout | mid | Turn maintainer reviews, conflicts and red CI on our open PRs into rows. |
-| Fixer (×3) | mid | Reproduce the bug in an isolated worktree, fix it, record the exact test command that went red to green. |
-| Reviewer (×3) | high | Re-run that test on the fix and on `main`, check value, diff size, duplicates and the PR text; set READY, FIX, DROPPED or HOLD. |
+| Fixer (×2–3) | mid | Reproduce the bug in an isolated worktree, fix it, record the exact test command that went red to green. |
+| Reviewer (×1–3) | high | Re-run that test on the fix and on `main`, check value, diff size, duplicates and the PR text; set READY, FIX, DROPPED or HOLD. |
+
+The number of sessions follows the run's target. A run aimed at five new PRs or fewer starts two
+scouts, two fixers and one reviewer; a run with 13 sessions for a five-PR target was more
+than the work needed.
 | Moderator | high | Watch the run, unblock stuck rows, write the closing report. |
 | Follow-up owner | mid | Own every open PR until it is merged or closed. |
 
@@ -91,6 +95,29 @@ Decisions the metrics drove:
 - **A third reviewer.** The bottleneck was finished fixes waiting for review, not fixing.
 - **Context discipline.** Prompts tell each role exactly which slice of the shared notes to
   read, because average context per request was the main cost driver.
+
+## What changed after the first month
+
+The pipeline kept running while I measured it. These are the changes since the numbers above,
+each one a reaction to something the metrics or the maintainers showed.
+
+- **Repositories are ordered by how they respond.** A repository with more than three times as
+  many open PRs of mine as merges in the last 30 days goes behind the others when a fixer claims
+  work. The trigger was one project with eight of my PRs open and two merged.
+- **The run knows when it is out of work.** When every scout has finished, the queue has no
+  candidates left and new plus in-progress PRs are still under the target, the run exits with a
+  specific code instead of waiting for work that will not come.
+- **Dry scout passes pause the run.** Three scout passes in a row that add nothing put the
+  scouts to sleep for 30 minutes, so an empty search space costs time instead of tokens.
+- **Headless roles start light.** Fixers, reviewers, scouts and the mail and watch roles run
+  non-interactively and now start without the memory index, connectors or skills they never
+  use (the reviewer keeps its skills), with a prompt cache of five minutes and a cap in dollars
+  per queue row. In a test the fixed prefix of a session went from 34,465 to 10,709 tokens.
+- **The moderator compacts less often.** Its auto-compaction threshold went from 100k to 200k
+  tokens, because at 100k it compacted about every four requests. The run now warns when the moderator's context passes 220k tokens per request.
+- **Cost is read from the transcripts, at real prices.** A day on 21 November came to about
+  $2.30 per published PR once cache reads and writes are priced as they are billed. That is the
+  number the light start is meant to bring down.
 
 ## What tanda keeps from this
 
