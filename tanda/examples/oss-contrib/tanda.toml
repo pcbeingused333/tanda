@@ -34,7 +34,7 @@ working = "BUILDING"
 verdicts = ["BUILT", "DROPPED", "HOLD"]
 prompt = "prompts/builder.md"
 
-[roles.reviewer]             # use your strongest model here: it is the quality gate
+[roles.reviewer]             # use a separate session: it is the quality gate
 agent = "claude"
 model = "opus"
 claims = ["BUILT"]
