@@ -96,7 +96,8 @@ carry reputational risk:
 | Publishing a PR | Agents, inside fixed rules | Per-repo caps and frozen orgs apply, an independent reviewer re-runs the test before anything is published, and AI involvement is disclosed on every PR. |
 
 `HOLD` is the default for anything unexpected: an agent that exits without a verdict, a timeout, a
-repro only the human can observe, or a CLA to sign. Parking an item costs minutes of human time.
+repro only the human can observe, or a CLA that assigns copyright or grants an exclusive license
+(license-only CLAs are signed under a standing rule). Parking an item costs minutes of human time.
 A wrong PR costs a maintainer's trust.
 
 ## Rules the agents work under
