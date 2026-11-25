@@ -85,8 +85,8 @@ and only on an item it holds. The checks themselves live in the reviewer prompt
 
 ## Human in the loop
 
-Agents do the searching, reproducing, fixing and checking. A person keeps the decisions that
-carry reputational risk:
+Agents do the searching, reproducing, fixing, checking and publishing. A person sets the rules
+they work under and keeps the calls with the most reputational risk:
 
 | Decision | Who | Why |
 | --- | --- | --- |
