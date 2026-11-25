@@ -93,7 +93,7 @@ carry reputational risk:
 | Which repos and orgs are in scope | Human | Volume caps, frozen orgs and AI policies are relationship decisions, not technical ones. |
 | Whether a candidate is worth building | Human, or a triage role the human watches | Dropping a candidate after a build was the most expensive mistake. |
 | Design choices and behavior changes | Human, through `HOLD` | The fixer drafts an issue comment instead of code, and the human decides whether to post it. |
-| Publishing a PR | Human, always | Agents never push or open PRs. A human reviews and publishes. |
+| Publishing a PR | Agents, inside fixed rules | Per-repo caps and frozen orgs apply, an independent reviewer re-runs the test before anything is published, and AI involvement is disclosed on every PR. |
 
 `HOLD` is the default for anything unexpected: an agent that exits without a verdict, a timeout, a
 repro only the human can observe, or a CLA to sign. Parking an item costs minutes of human time.
